@@ -1,0 +1,701 @@
+/* These variables keep the palette and spacing consistent across the app. */
+:root {
+  color-scheme: light;
+  --page: #f1f3ef;
+  --surface: #fafbf8;
+  --pine: #1c3a32;
+  --muted: #4d655d;
+  --accent: #9a3b36;
+  --line: #d5dbd3;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --content-width: 44rem;
+  font-family: "Instrument Sans", "Segoe UI", sans-serif;
+  color: var(--pine);
+  background: var(--page);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Base styles keep the page calm and prevent small-screen overflow. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--page);
+  background-image:
+    linear-gradient(rgba(28, 58, 50, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 58, 50, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  color: var(--pine);
+}
+
+/* Night colors follow the searched location's local sun position. */
+body.is-night {
+  color-scheme: dark;
+  --page: #1c302a;
+  --surface: #263a33;
+  --pine: #e8eee7;
+  --muted: #b5c2b9;
+  --accent: #dfa092;
+  --line: #41574d;
+  background-color: var(--page);
+  background-image:
+    linear-gradient(rgba(232, 238, 231, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 238, 231, 0.025) 1px, transparent 1px);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 62%, white);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The main column stays narrow enough for the weather data to scan easily. */
+.app-shell {
+  width: min(100% - 2rem, var(--content-width));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: var(--space-4) 0 var(--space-5);
+  display: flex;
+  flex-direction: column;
+}
+
+/* The header keeps branding and the unit control aligned at all widths. */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.75rem;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+  color: var(--pine);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.wordmark span {
+  color: var(--accent);
+}
+
+.unit-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.unit-button {
+  min-width: 2.4rem;
+  min-height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.unit-button.is-selected {
+  background: var(--pine);
+  color: var(--surface);
+}
+
+/* Search is the first clear action and leaves room for location suggestions. */
+.search-section {
+  padding: clamp(2.75rem, 10vw, 5rem) 0 var(--space-5);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 34rem;
+  margin-bottom: var(--space-4);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(2rem, 7vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.search-form {
+  display: flex;
+  gap: var(--space-1);
+  min-height: 3.25rem;
+  padding: 4px;
+  border: 1px solid #bcc8bd;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.search-controls {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.search-controls .search-form {
+  min-width: 0;
+  flex: 1;
+}
+
+.search-form:focus-within {
+  border-color: var(--pine);
+}
+
+.search-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 0 var(--space-2);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--pine);
+  font-size: 0.9375rem;
+}
+
+.search-form input::placeholder {
+  color: #78877f;
+  opacity: 1;
+}
+
+.search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 6.25rem;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: 4px;
+  background: var(--pine);
+  color: var(--surface);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.search-button:hover:not(:disabled) {
+  background: #294e43;
+}
+
+.location-button {
+  min-height: 3.25rem;
+  padding: 0 var(--space-3);
+  border: 1px solid #bcc8bd;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--pine);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.location-button:hover:not(:disabled) {
+  background: #e5eae3;
+}
+
+body.is-night .search-button:hover:not(:disabled) {
+  background: #61796e;
+  color: #ffffff;
+}
+
+body.is-night .location-button {
+  border-color: var(--line);
+}
+
+body.is-night .location-button:hover:not(:disabled) {
+  background: #33483e;
+}
+
+.search-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.location-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.search-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.search-feedback {
+  min-height: 2rem;
+  padding-top: var(--space-2);
+}
+
+.status-message {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.status-message.is-error {
+  color: #842f2b;
+}
+
+body.is-night .status-message.is-error {
+  color: #f0a69d;
+}
+
+.location-list {
+  display: grid;
+  gap: 2px;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.location-choice {
+  width: 100%;
+  padding: 0.7rem var(--space-2);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--pine);
+  cursor: pointer;
+  text-align: left;
+}
+
+.location-choice:hover,
+.location-choice:focus-visible {
+  background: #e8ede6;
+}
+
+body.is-night .location-choice:hover,
+body.is-night .location-choice:focus-visible {
+  background: #33483e;
+}
+
+.location-name {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.location-detail {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* Weather results sit on a quiet surface with fine dividers, not heavy boxes. */
+.weather-panel {
+  padding: clamp(1.25rem, 5vw, 2.25rem);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--accent);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.weather-panel[hidden] {
+  display: none;
+}
+
+.current-weather {
+  animation: result-appear 350ms ease-out both;
+}
+
+.current-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.location-heading {
+  margin: 0;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.location-country {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.weather-mark {
+  width: clamp(2.75rem, 12vw, 4rem);
+  height: clamp(2.75rem, 12vw, 4rem);
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.temperature-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin: var(--space-5) 0 var(--space-1);
+  font-family: "Newsreader", Georgia, serif;
+  line-height: 0.9;
+}
+
+.temperature-value {
+  font-size: clamp(5rem, 24vw, 9rem);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.temperature-unit {
+  padding-top: 0.35rem;
+  font-size: clamp(1.75rem, 8vw, 2.75rem);
+}
+
+.current-condition {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.feels-like {
+  margin: var(--space-1) 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: var(--space-5) 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.weather-detail {
+  min-width: 0;
+  padding: var(--space-3) var(--space-2) var(--space-1) 0;
+}
+
+.weather-detail + .weather-detail {
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--line);
+}
+
+.weather-detail:nth-child(odd) {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.weather-detail:nth-child(n + 3) {
+  border-top: 1px solid var(--line);
+}
+
+.weather-detail dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.weather-detail dd {
+  margin: var(--space-1) 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Each forecast day shares one row on desktop and stacks cleanly on phones. */
+.forecast-section {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.forecast-heading-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.forecast-heading-row h2 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.forecast-caption {
+  color: var(--muted);
+  font-size: 0.6875rem;
+}
+
+.forecast-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  max-width: 36rem;
+  margin-inline: auto;
+  border-top: 1px solid var(--line);
+}
+
+.forecast-row {
+  display: flex;
+  min-width: 0;
+  min-height: 6.25rem;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2) var(--space-2);
+  border-right: 1px solid var(--line);
+  text-align: center;
+}
+
+.forecast-row:last-child {
+  border-right: 0;
+}
+
+.forecast-day {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.forecast-condition {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+.forecast-condition > span {
+  min-width: 0;
+}
+
+.forecast-condition-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.forecast-rain-chance {
+  color: var(--muted);
+  font-size: 0.625rem;
+  line-height: 1.3;
+}
+
+.forecast-weather-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.forecast-temperatures {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.forecast-low {
+  color: var(--muted);
+}
+
+/* Wide screens give the main reading and supporting metrics their own columns. */
+@media (min-width: 721px) {
+  .current-weather {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.62fr);
+    grid-template-areas:
+      "topline topline"
+      "temperature details"
+      "condition details"
+      "feels details";
+    column-gap: var(--space-6);
+  }
+
+  .current-topline {
+    grid-area: topline;
+  }
+
+  .temperature-block {
+    grid-area: temperature;
+    margin-top: var(--space-4);
+  }
+
+  .current-condition {
+    grid-area: condition;
+  }
+
+  .feels-like {
+    grid-area: feels;
+  }
+
+  .weather-details {
+    grid-area: details;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    margin: 0;
+    padding: var(--space-2) 0 var(--space-2) var(--space-4);
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .weather-details .weather-detail {
+    padding: var(--space-3) 0;
+  }
+
+  .weather-details .weather-detail + .weather-detail {
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+}
+
+/* The footer stays at the bottom when the page has no weather results. */
+.app-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-6);
+  color: var(--muted);
+  font-size: 0.6875rem;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.app-footer a {
+  color: var(--pine);
+  text-underline-offset: 2px;
+}
+
+@keyframes result-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Compact screens put each forecast day on two tidy lines when needed. */
+@media (max-width: 600px) {
+  .search-controls {
+    flex-direction: column;
+  }
+
+  .location-button {
+    width: 100%;
+  }
+
+  .app-shell {
+    width: min(100% - 1.5rem, var(--content-width));
+  }
+
+  .weather-panel {
+    padding: 1rem;
+  }
+
+  .forecast-row {
+    display: grid;
+    grid-template-columns: minmax(3.5rem, 0.8fr) minmax(0, 1.4fr) auto;
+    min-height: 3.35rem;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.65rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .forecast-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .forecast-row:last-child {
+    border-bottom: 0;
+  }
+
+  .forecast-condition {
+    font-size: 0.6875rem;
+    text-align: center;
+  }
+
+  .forecast-temperatures {
+    gap: 0.45rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

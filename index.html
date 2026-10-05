@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A calm, clear five-day weather forecast for cities around the world.">
+    <meta name="theme-color" content="#f1f3ef">
+    <title>Weather | A clear look ahead</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <!-- The header names the app and provides a keyboard-operable temperature switch. -->
+      <header class="app-header">
+        <a class="wordmark" href="index.html" aria-label="Weather home">Weather<span aria-hidden="true">.</span></a>
+        <div class="unit-switch" role="group" aria-label="Temperature unit">
+          <button class="unit-button is-selected" id="celsius-button" type="button" aria-label="Show temperatures in Celsius" aria-pressed="true">°C</button>
+          <button class="unit-button" id="fahrenheit-button" type="button" aria-label="Show temperatures in Fahrenheit" aria-pressed="false">°F</button>
+        </div>
+      </header>
+
+      <!-- The form supports both Enter and the visible search button. -->
+      <section class="search-section" aria-labelledby="search-heading">
+        <p class="eyebrow">Five-day forecast</p>
+        <h1 id="search-heading">Weather in any city.</h1>
+        <div class="search-controls">
+          <form class="search-form" id="search-form" role="search">
+            <label class="visually-hidden" for="city-input">Search for a city</label>
+            <input id="city-input" name="city" type="search" placeholder="Search a city" autocomplete="off" maxlength="100" required>
+            <button class="search-button" id="search-button" type="submit">
+              <span>Search</span>
+              <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+                <circle cx="8.7" cy="8.7" r="5.6" stroke="currentColor" stroke-width="1.5"></circle>
+                <path d="m13 13 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+              </svg>
+            </button>
+          </form>
+          <button class="location-button" id="location-button" type="button">Use my location</button>
+        </div>
+        <div class="search-feedback" id="search-feedback" aria-live="polite" aria-atomic="true">
+          <p class="status-message" id="status-message">Search for a city to see its weather.</p>
+          <ul class="location-list" id="location-list" aria-label="Matching cities"></ul>
+        </div>
+      </section>
+
+      <!-- Current conditions and forecast stay hidden until valid weather data arrives. -->
+      <section class="weather-panel" id="weather-panel" aria-label="Weather results" aria-live="polite" aria-busy="false" hidden>
+        <div class="current-weather" id="current-weather"></div>
+        <section class="forecast-section" aria-labelledby="forecast-heading">
+          <div class="forecast-heading-row">
+            <h2 id="forecast-heading">Five-day forecast</h2>
+            <span class="forecast-caption">Daily outlook</span>
+          </div>
+          <div class="forecast-list" id="forecast-list"></div>
+        </section>
+      </section>
+
+      <!-- The footer credits the source of the weather data and the project author. -->
+      <footer class="app-footer">
+        <p>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a></p>
+        <p>Built by Erwin Leonardia</p>
+      </footer>
+    </main>
+  </body>
+</html>
